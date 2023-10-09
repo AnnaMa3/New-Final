@@ -18,13 +18,13 @@ public class ProductsTests extends BaseTest{
 
     @Epic("Report")
     @Test
-    @Description("Report")
-    @TmsLink("Test-4")
+    @Description("Verify the ability to add to Wishlist")
+    @TmsLink("COMPLIANCE-167004")
     @Severity(SeverityLevel.CRITICAL)
     public void addToWishlistTest(){
 
         addProductToWishlist();
-        Assertions.assertTrue(ProductPage.getWishlistItemsNumber().contains("1 Item"));
+        Assertions.assertTrue(ProductPage.getWishlistItemsNumber().contains("1 Item"), "Product is not added to wishlist");
 
     }
 
@@ -32,13 +32,13 @@ public class ProductsTests extends BaseTest{
     @Epic("Report")
     @ParameterizedTest
     @MethodSource
-    @Description("Report")
-    @TmsLink("Test-5")
+    @Description("Verify the ability to add to cart")
+    @TmsLink("COMPLIANCE-167005")
     @Severity(SeverityLevel.CRITICAL)
     public void addToCartTest(String productName){
 
         addProductToCart(productName);
-        Assertions.assertTrue(ProductPage.selectedProductIsDisplayedInCart(productName));
+        Assertions.assertTrue(ProductPage.selectedProductIsDisplayedInCart(productName), "Product is not added to cart");
 
     }
 

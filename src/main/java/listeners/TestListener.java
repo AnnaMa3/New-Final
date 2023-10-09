@@ -1,6 +1,8 @@
 package listeners;
 import driver.Driver;
 import exceptions.BadConfigException;
+import exceptions.FolderNotFoundException;
+import exceptions.ScreenshotNotAttachedException;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Attachment;
 import org.junit.jupiter.api.extension.ExtensionContext;
@@ -18,8 +20,6 @@ import javax.imageio.ImageIO;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -51,7 +51,7 @@ public class TestListener implements TestWatcher {
 
             Allure.addAttachment("Test Screenshot", new ByteArrayInputStream(((TakesScreenshot)driver).getScreenshotAs(OutputType.BYTES)));
         } catch (IOException e){
-            throw new BadConfigException("Something bad happened", e);
+            throw new ScreenshotNotAttachedException("Screenshot not attached", e);
         }
         return null;
     }
@@ -61,7 +61,7 @@ public class TestListener implements TestWatcher {
             try{
                 Files.createDirectories(artifactsPath);
             } catch (IOException e){
-                throw new BadConfigException("Something bad happened", e);
+                throw new FolderNotFoundException("Folder not found", e);
             }
         }
     }

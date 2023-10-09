@@ -18,12 +18,12 @@ public class CreateAccountTest extends BaseTest{
 
     @Epic("Report")
     @Test
-    @Description("Report")
-    @TmsLink("Test-1")
+    @Description("Verify the ability to create an account")
+    @TmsLink("COMPLIANCE-167001")
     @Severity(SeverityLevel.CRITICAL)
     public void createAccountTest(){
         createAnAccount(FIRSTNAME, LASTNAME, EMAIL, PASSWORD);
-        Assertions.assertTrue(AccountPage.accountTitleIsDisplayed());
-        Assertions.assertEquals("Welcome, " + FIRSTNAME +" " + LASTNAME + "!", accountName());
+        Assertions.assertTrue(AccountPage.accountTitleIsDisplayed(), "Account is not created");
+        Assertions.assertEquals("Welcome, " + FIRSTNAME +" " + LASTNAME + "!", accountName(), "Account is not created");
     }
 }

@@ -1,5 +1,6 @@
 package driver;
 import config.TestProperties;
+import exceptions.DriverNotConfiguredException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -92,7 +93,7 @@ public class Driver {
             return driver;
         } catch (MalformedURLException e){
             e.printStackTrace();
-            return null;
+            throw new DriverNotConfiguredException("Driver not configured", e);
         }
     }
 
