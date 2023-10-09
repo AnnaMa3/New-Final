@@ -9,7 +9,6 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
-import pageFactory.AccountPage;
 import ru.yandex.qatools.ashot.AShot;
 import ru.yandex.qatools.ashot.Screenshot;
 import ru.yandex.qatools.ashot.shooting.ShootingStrategies;
@@ -20,6 +19,9 @@ import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class TestListener implements TestWatcher, TestExecutionExceptionHandler {
     private WebDriver driver;
@@ -50,7 +52,7 @@ public class TestListener implements TestWatcher, TestExecutionExceptionHandler 
         Screenshot screenshot = new AShot().shootingStrategy(ShootingStrategies
                 .viewportPasting(ShootingStrategies.scaling(windowDPR),100)).takeScreenshot(driver);
 
-        AccountPage.createArtifactsFolder();
+        createArtifactsFolder();
 
         try {
             File screenshotFile = new File("target/artifacts/failure.png");
@@ -60,5 +62,14 @@ public class TestListener implements TestWatcher, TestExecutionExceptionHandler 
         } catch (IOException e){
         }
         return null;
+    }
+    public static void createArtifactsFolder() {
+        Path artifactsPath = Paths.get("target/artifacts");
+        if (!Files.exists(artifactsPath)){
+            try{
+                Files.createDirectories(artifactsPath);
+            } catch (IOException e){
+            }
+        }
     }
 }

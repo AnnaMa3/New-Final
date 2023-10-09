@@ -18,7 +18,7 @@ public abstract class BasePage {
         this.waiter = new WaiterUtils(driver);
     }
 
-    public void initElements(){
+    public void initElements() throws MalformedURLException, URISyntaxException{
         PageFactory.initElements(driver, this);
     }
 }

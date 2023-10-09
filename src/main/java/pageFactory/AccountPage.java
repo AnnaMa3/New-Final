@@ -6,12 +6,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
 
 public class AccountPage extends BasePage {
@@ -56,7 +52,7 @@ public class AccountPage extends BasePage {
     private static WebElement country;
 
     @FindBy(css= ".box-address-billing")
-    private static WebElement addressConteiner;
+    private static WebElement addressContainer;
 
     @FindBy(css= ".save")
     private static WebElement saveButton;
@@ -71,17 +67,6 @@ public class AccountPage extends BasePage {
         super(driver);
         initElements();
     }
-
-    public static void createArtifactsFolder() {
-        Path artifactsPath = Paths.get("target/artifacts");
-        if (!Files.exists(artifactsPath)){
-            try{
-                Files.createDirectories(artifactsPath);
-            } catch (IOException e){
-            }
-        }
-    }
-
 
     public AccountPage clickAddressBook() throws MalformedURLException, URISyntaxException {
         addressBookLink.click();
@@ -124,12 +109,12 @@ public class AccountPage extends BasePage {
         saveButton.click();
         return new AccountPage(driver);
     }
-    public static boolean isDisplayed() {
+    public static boolean accountTitleIsDisplayed() {
         return myAccountTitle.isDisplayed();
     }
 
-    public static boolean isAdded() {
-        return addressConteiner.isDisplayed();
+    public boolean addressIsAdded() {
+        return addressContainer.isDisplayed();
     }
     public  ProductPage clickAddressBookLink() throws MalformedURLException, URISyntaxException {
         addressBookLink.click();

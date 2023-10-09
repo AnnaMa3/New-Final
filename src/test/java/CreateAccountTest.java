@@ -26,8 +26,7 @@ public class CreateAccountTest extends BaseTest{
     @Severity(SeverityLevel.CRITICAL)
     public void createAccountTest() throws MalformedURLException, URISyntaxException {
         createAnAccount(FIRSTNAME, LASTNAME, EMAIL, PASSWORD);
-        Assertions.assertTrue(AccountPage.isDisplayed());
+        Assertions.assertTrue(AccountPage.accountTitleIsDisplayed());
         Assertions.assertEquals("Welcome, " + FIRSTNAME +" " + LASTNAME + "!", accountName());
-        logout();
     }
 }

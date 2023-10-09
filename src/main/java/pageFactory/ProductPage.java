@@ -2,18 +2,14 @@ package pageFactory;
 
 import base.BasePage;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
-import java.time.Duration;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 public class ProductPage extends BasePage {
     @FindBy(css= ".nav-1")
@@ -22,7 +18,7 @@ public class ProductPage extends BasePage {
     @FindBy(xpath= "(//*[@class=\"item\"])[position()=1]")
     private static WebElement categoryLink;
 
-    @FindBy(xpath= "(//*[@class=\"product-image-photo\"])[position()=1]")
+    @FindBy(xpath= "(//*[@class=\"product-item-info\"])[position()=1]")
     private static WebElement productLink;
 
     @FindBy(xpath= "(//*[@class=\"action towishlist\"])[position()=1]")
@@ -46,17 +42,44 @@ public class ProductPage extends BasePage {
     @FindBy(css= ".viewcart")
     private static WebElement viewAndEditCartLink;
 
-    @FindBy(css= ".product-image-photo")
+    @FindBy(css= "//*[@data-container=\"product-grid\"]")
     private static WebElement productWishlist;
 
-    @FindBy(css= ".btn-remove")
+    @FindBy(css= "#wishlist-sidebar .btn-remove")
     private static WebElement removeProductWishlistButton;
 
     @FindBy(css= ".form-cart")
     private static WebElement formCart;
 
-    @FindBy(xpath= "(//*[@class=\"action action-delete\"])[position()=1]")
-    private static WebElement product;
+    @FindBy(xpath= "//*[@class=\"action action-delete\"]")
+    private static WebElement deleteIcon;
+
+    @FindBy(css = "#search")
+    private static WebElement searchField;
+
+    @FindBy(xpath= "(//*[@class=\"products list items product-items\"])")
+    private static WebElement productList;
+
+    @FindBy(xpath= "(//*[@class=\"modes-mode mode-list\"])[position()=1]")
+    private static WebElement listModeButton;
+
+    @FindBy(css = ".page-main")
+    private static WebElement pageMainFrame;
+
+    @FindBy(css = ".main")
+    private static WebElement columnsMainFrame;
+
+    @FindBy(css = ".product-item-link")
+    private static WebElement selectedProductLink;
+
+    @FindBy(css = ".product-info-main")
+    private static WebElement productInfo;
+
+    @FindBy(css = ".showcart ")
+    private static WebElement cartIcon;
+
+    @FindBy(css = ".base")
+    private static WebElement selectedProductName;
 
 
 
@@ -79,27 +102,6 @@ public class ProductPage extends BasePage {
         productLink.click();
         return new  ProductPage(driver);
     }
-
-    public  ProductPage addProduct() throws MalformedURLException, URISyntaxException {
-        for (int i=1; i <= 5; i++){
-            clickWhatsNewLink();
-            clickCategoryLink();
-            String productXPath = "(//*[@class=\"product-image-photo\"])[position()=" + i + "]";
-            WebElement productToAdd = driver.findElement(By.xpath(productXPath));
-            productToAdd.click();
-            setSize();
-            setColor();
-            clickAddToCartButton();
-            i++;
-            try {
-                Thread.sleep(3000);
-            } catch (InterruptedException e){
-                e.printStackTrace();
-            }
-        }
-        return new  ProductPage(driver);
-    }
-
 
 
     public  ProductPage clickAddToWishButton() throws MalformedURLException, URISyntaxException {
@@ -131,20 +133,80 @@ public class ProductPage extends BasePage {
     }
 
     public  ProductPage cleanCart() throws MalformedURLException, URISyntaxException {
-        cartCounter.click();
+        cartIcon.click();
         viewAndEditCartLink.click();
-        for (int i=1; i<=3; i++){
-            product.click();
-            driver.navigate().refresh();
-        }
+        List<WebElement> cartItems = driver.findElements(By.xpath("//*[@class=\"action action-delete\"]"));
+            for (int i=1; i<=cartItems.size(); i++){
+                deleteIcon.click();
+                driver.navigate().refresh();
+            }
         return new  ProductPage(driver);
     }
 
     public  ProductPage cleanWishlist() throws MalformedURLException, URISyntaxException {
-        Actions actions = new Actions(driver);
-        actions.moveToElement(productWishlist).perform();
-        removeProductWishlistButton.click();
+        List<WebElement> wishItems = driver.findElements(By.cssSelector("#wishlist-sidebar .btn-remove"));
+        for (WebElement wishItem:wishItems){
+            wishItem.click();
+        }
         return new  ProductPage(driver);
+    }
+
+    public  ProductPage productSelection(String productName) throws MalformedURLException, URISyntaxException {
+        searchField.sendKeys(productName);
+        searchField.sendKeys(Keys.ENTER);
+        String productXPath = "(//*[@class=\"product-item-info\"])[position()=1]";
+        WebElement productToAdd = driver.findElement(By.xpath(productXPath));
+        productToAdd.click();
+
+        try {
+            if (sizeIsDisplayed()) {
+                size.click();
+            } else {
+                System.out.println("Skipping");
+            }
+        } catch (NoSuchElementException e){
+            System.out.println("Skipping");
+        }
+
+
+        try {
+            if (colorIsDisplayed()) {
+                color.click();
+            } else {
+                System.out.println("Skipping");
+            }
+        } catch (NoSuchElementException e){
+            System.out.println("Skipping");
+        }
+
+        clickAddToCartButton();
+        return new  ProductPage(driver);
+    }
+
+    public static boolean selectedProductIsDisplayedInCart(String productName) throws MalformedURLException, URISyntaxException {
+        cartIcon.click();
+        viewAndEditCartLink.click();
+        List<WebElement> cartItems = driver.findElements(By.cssSelector(".item-info .product-item-name a"));
+        boolean nameIsDisplayed = false;
+        for (WebElement cartItem:cartItems){
+            cartItem.getText();
+            if (cartItem.getText().equals(productName)){
+                nameIsDisplayed = true;
+            }
+        }
+        return nameIsDisplayed;
+    }
+
+    public static String getProductName() throws MalformedURLException, URISyntaxException {
+        return selectedProductName.getText();
+    }
+
+    public static boolean sizeIsDisplayed() {
+        return size.isDisplayed();
+    }
+
+    public static boolean colorIsDisplayed() {
+        return color.isDisplayed();
     }
 
 

@@ -77,6 +77,9 @@ public class HomePage extends BasePage {
         return new AccountPage(driver);
     }
 
+    public boolean logoutIsDone() {
+        return signInLink.isDisplayed();
+    }
 
 
 }
