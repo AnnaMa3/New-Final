@@ -6,16 +6,12 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import pageFactory.ProductPage;
-import java.net.MalformedURLException;
-import java.net.URISyntaxException;
 import java.util.stream.Stream;
 
 
 @ExtendWith(TestListener.class)
 
 public class ProductsTests extends BaseTest{
-    private static final String EMAIL = TestProperties.get("email");
-    private static final String PASSWORD = TestProperties.get("password");
     private static final String PRODUCTNAME1 = TestProperties.get("productname1");
     private static final String PRODUCTNAME2 = TestProperties.get("productname2");
     private static final String PRODUCTNAME3 = TestProperties.get("productname3");
@@ -25,7 +21,7 @@ public class ProductsTests extends BaseTest{
     @Description("Report")
     @TmsLink("Test-4")
     @Severity(SeverityLevel.CRITICAL)
-    public void addToWishlistTest() throws MalformedURLException, URISyntaxException {
+    public void addToWishlistTest(){
 
         addProductToWishlist();
         Assertions.assertTrue(ProductPage.getWishlistItemsNumber().contains("1 Item"));
@@ -39,7 +35,7 @@ public class ProductsTests extends BaseTest{
     @Description("Report")
     @TmsLink("Test-5")
     @Severity(SeverityLevel.CRITICAL)
-    public void addToCartTest(String productName) throws MalformedURLException, URISyntaxException {
+    public void addToCartTest(String productName){
 
         addProductToCart(productName);
         Assertions.assertTrue(ProductPage.selectedProductIsDisplayedInCart(productName));

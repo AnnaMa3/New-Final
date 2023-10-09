@@ -7,9 +7,6 @@ import pageFactory.AccountPage;
 import pageFactory.HomePage;
 import pageFactory.ProductPage;
 
-import java.net.MalformedURLException;
-import java.net.URISyntaxException;
-
 import static driver.Driver.getDriver;
 import static driver.Driver.tearDown;
 
@@ -21,12 +18,12 @@ public class BaseTest {
 
 
     @BeforeAll
-    public static void init() throws MalformedURLException, URISyntaxException {
+    public static void init() {
         getDriver().get(URL);
         login(EMAIL,PASSWORD);
     }
 
-    public AccountPage createAnAccount(String firstName, String lastName, String email, String password) throws MalformedURLException, URISyntaxException {
+    public AccountPage createAnAccount(String firstName, String lastName, String email, String password) {
         HomePage homePage = new HomePage(driver);
         homePage.setFirstName(firstName);
         homePage.setLastName(lastName);
@@ -38,7 +35,7 @@ public class BaseTest {
         return new AccountPage(driver);
 
     }
-    public static AccountPage login(String email, String password) throws MalformedURLException, URISyntaxException {
+    public static AccountPage login(String email, String password) {
         HomePage homePage = new HomePage(driver);
         homePage.clickSignInLink();
         homePage.email(email);
@@ -48,7 +45,7 @@ public class BaseTest {
 
     }
 
-    public AccountPage addAddress(String phone, String street, String city, String zip) throws MalformedURLException, URISyntaxException {
+    public AccountPage addAddress(String phone, String street, String city, String zip) {
         AccountPage accountPage = new AccountPage(driver);
         accountPage.clickAddNewAddressButton();
         accountPage.setPhone(phone);
@@ -61,25 +58,25 @@ public class BaseTest {
         return new AccountPage(driver);
 
     }
-    public AccountPage addressBook() throws MalformedURLException, URISyntaxException {
+    public AccountPage addressBook() {
         AccountPage accountPage = new AccountPage(driver);
         accountPage.clickAddressBookLink();
         return new AccountPage(driver);
 
     }
 
-    public int getRows() throws MalformedURLException, URISyntaxException {
+    public int getRows(){
         AccountPage accountPage = new AccountPage(driver);
         return accountPage.getRowNumber();
 
     }
-    public String accountName() throws MalformedURLException, URISyntaxException {
+    public String accountName(){
         AccountPage accountPage = new AccountPage(driver);
         return accountPage.getAccountName();
 
     }
 
-    public void addProductToWishlist() throws MalformedURLException, URISyntaxException {
+    public void addProductToWishlist() {
         ProductPage productPage = new ProductPage(driver);
         productPage.clickWhatsNewLink();
         productPage.clickCategoryLink();
@@ -87,24 +84,24 @@ public class BaseTest {
         productPage.clickAddToWishButton();
     }
 
-    public void addProductToCart(String productName) throws MalformedURLException, URISyntaxException {
+    public void addProductToCart(String productName) {
         ProductPage productPage = new ProductPage(driver);
         productPage.productSelection(productName);
     }
 
-    public static void cleanWishlist() throws MalformedURLException, URISyntaxException {
+    public static void cleanWishlist(){
         ProductPage productPage = new ProductPage(driver);
         productPage.cleanWishlist();
     }
 
-    public static void cleanCart() throws MalformedURLException, URISyntaxException {
+    public static void cleanCart(){
         ProductPage productPage = new ProductPage(driver);
         productPage.cleanCart();
     }
 
 
 
-    private static HomePage logout() throws MalformedURLException, URISyntaxException {
+    private static HomePage logout(){
         AccountPage accountPage = new AccountPage(driver);
         accountPage.logout();
         return new HomePage(driver);
@@ -112,7 +109,7 @@ public class BaseTest {
 
 
     @AfterAll
-    public static void closeBrowser() throws MalformedURLException, URISyntaxException {
+    public static void closeBrowser(){
         cleanWishlist();
         cleanCart();
         logout();

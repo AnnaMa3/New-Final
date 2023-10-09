@@ -7,9 +7,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 import pageFactory.AccountPage;
 
-import java.net.MalformedURLException;
-import java.net.URISyntaxException;
-
 @ExtendWith(TestListener.class)
 public class CreateAccountTest extends BaseTest{
 
@@ -24,7 +21,7 @@ public class CreateAccountTest extends BaseTest{
     @Description("Report")
     @TmsLink("Test-1")
     @Severity(SeverityLevel.CRITICAL)
-    public void createAccountTest() throws MalformedURLException, URISyntaxException {
+    public void createAccountTest(){
         createAnAccount(FIRSTNAME, LASTNAME, EMAIL, PASSWORD);
         Assertions.assertTrue(AccountPage.accountTitleIsDisplayed());
         Assertions.assertEquals("Welcome, " + FIRSTNAME +" " + LASTNAME + "!", accountName());

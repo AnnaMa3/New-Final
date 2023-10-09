@@ -1,5 +1,6 @@
 package listeners;
 import driver.Driver;
+import exceptions.BadConfigException;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Attachment;
 import org.junit.jupiter.api.extension.ExtensionContext;
@@ -23,12 +24,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-public class TestListener implements TestWatcher, TestExecutionExceptionHandler {
+public class TestListener implements TestWatcher {
     private WebDriver driver;
-    @Override
-    public void handleTestExecutionException(ExtensionContext extensionContext, Throwable throwable) throws Throwable {
-        throw throwable;
-    }
 
     @Override
     public void testFailed(ExtensionContext context, Throwable cause){
@@ -54,6 +51,7 @@ public class TestListener implements TestWatcher, TestExecutionExceptionHandler 
 
             Allure.addAttachment("Test Screenshot", new ByteArrayInputStream(((TakesScreenshot)driver).getScreenshotAs(OutputType.BYTES)));
         } catch (IOException e){
+            throw new BadConfigException("Something bad happened", e);
         }
         return null;
     }
@@ -63,6 +61,7 @@ public class TestListener implements TestWatcher, TestExecutionExceptionHandler 
             try{
                 Files.createDirectories(artifactsPath);
             } catch (IOException e){
+                throw new BadConfigException("Something bad happened", e);
             }
         }
     }

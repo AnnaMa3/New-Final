@@ -5,8 +5,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-import java.net.MalformedURLException;
-import java.net.URISyntaxException;
 
 public class HomePage extends BasePage {
     @FindBy(css = "#firstname")
@@ -36,7 +34,7 @@ public class HomePage extends BasePage {
     @FindBy(css = ".login.primary")
     private WebElement signInButton;
 
-    public HomePage(WebDriver driver) throws MalformedURLException, URISyntaxException {
+    public HomePage(WebDriver driver) {
         super(driver);
         initElements();
     }
@@ -62,17 +60,17 @@ public class HomePage extends BasePage {
     public void email(String email){
         emailAdress.sendKeys(email);
     }
-    public AccountPage clickCreateAnAccountButton() throws MalformedURLException, URISyntaxException {
+    public AccountPage clickCreateAnAccountButton(){
         createAnAccountButton.click();
         return new AccountPage(driver);
     }
 
-    public AccountPage clickSignInButton() throws MalformedURLException, URISyntaxException {
+    public AccountPage clickSignInButton() {
         signInButton.click();
         return new AccountPage(driver);
     }
 
-    public AccountPage clickSignInLink() throws MalformedURLException, URISyntaxException {
+    public AccountPage clickSignInLink() {
         signInLink.click();
         return new AccountPage(driver);
     }

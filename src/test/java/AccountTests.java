@@ -7,16 +7,11 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import pageFactory.AccountPage;
 
-import java.net.MalformedURLException;
-import java.net.URISyntaxException;
-
 
 @ExtendWith(TestListener.class)
 public class AccountTests extends BaseTest{
     private static final String FIRSTNAME = TestProperties.get("firstName");
     private static final String LASTNAME = TestProperties.get("lastName");
-    private static final String EMAIL = TestProperties.get("email");
-    private static final String PASSWORD = TestProperties.get("password");
 
     private static final String PHONE = TestProperties.get("phone");
     private static final String STREET = TestProperties.get("street");
@@ -30,7 +25,7 @@ public class AccountTests extends BaseTest{
     @Description("Report")
     @TmsLink("Test-2")
     @Severity(SeverityLevel.CRITICAL)
-    public void loginTest() throws MalformedURLException, URISyntaxException {
+    public void loginTest() {
         Assertions.assertTrue(AccountPage.accountTitleIsDisplayed());
         Assertions.assertEquals("Welcome, " + FIRSTNAME +" " + LASTNAME + "!", accountName());
 
@@ -41,7 +36,7 @@ public class AccountTests extends BaseTest{
     @Description("Report")
     @TmsLink("Test-3")
     @Severity(SeverityLevel.CRITICAL)
-    public void addAddressTest() throws MalformedURLException, URISyntaxException {
+    public void addAddressTest() {
         addressBook();
         int first = getRows();
         addAddress(PHONE, STREET, CITY, ZIP);

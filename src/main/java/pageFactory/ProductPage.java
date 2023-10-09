@@ -6,8 +6,6 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import java.net.MalformedURLException;
-import java.net.URISyntaxException;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -83,56 +81,56 @@ public class ProductPage extends BasePage {
 
 
 
-    public ProductPage(WebDriver driver) throws MalformedURLException, URISyntaxException {
+    public ProductPage(WebDriver driver) {
         super(driver);
         initElements();
 
     }
 
-    public  ProductPage clickWhatsNewLink() throws MalformedURLException, URISyntaxException {
+    public  ProductPage clickWhatsNewLink(){
         whatsNewLink.click();
         return new  ProductPage(driver);
     }
 
-    public  ProductPage clickCategoryLink() throws MalformedURLException, URISyntaxException {
+    public  ProductPage clickCategoryLink(){
         categoryLink.click();
         return new  ProductPage(driver);
     }
-    public  ProductPage clickProductLink() throws MalformedURLException, URISyntaxException {
+    public  ProductPage clickProductLink(){
         productLink.click();
         return new  ProductPage(driver);
     }
 
 
-    public  ProductPage clickAddToWishButton() throws MalformedURLException, URISyntaxException {
+    public  ProductPage clickAddToWishButton(){
         addToWishButton.click();
         return new  ProductPage(driver);
     }
 
-    public static String getWishlistItemsNumber() throws MalformedURLException, URISyntaxException {
+    public static String getWishlistItemsNumber(){
         return wishlistItems.getText();
     }
 
-    public  ProductPage setSize() throws MalformedURLException, URISyntaxException {
+    public  ProductPage setSize() {
         size.click();
         return new  ProductPage(driver);
     }
 
-    public  ProductPage setColor() throws MalformedURLException, URISyntaxException {
+    public  ProductPage setColor(){
         color.click();
         return new  ProductPage(driver);
     }
 
-    public  ProductPage clickAddToCartButton() throws MalformedURLException, URISyntaxException {
+    public  ProductPage clickAddToCartButton() {
         addToCartButton.click();
         return new  ProductPage(driver);
     }
 
-    public static String getCartItemsNumber() throws MalformedURLException, URISyntaxException {
+    public static String getCartItemsNumber() {
         return cartCounter.getText();
     }
 
-    public  ProductPage cleanCart() throws MalformedURLException, URISyntaxException {
+    public  ProductPage cleanCart() {
         cartIcon.click();
         viewAndEditCartLink.click();
         List<WebElement> cartItems = driver.findElements(By.xpath("//*[@class=\"action action-delete\"]"));
@@ -143,7 +141,7 @@ public class ProductPage extends BasePage {
         return new  ProductPage(driver);
     }
 
-    public  ProductPage cleanWishlist() throws MalformedURLException, URISyntaxException {
+    public  ProductPage cleanWishlist() {
         List<WebElement> wishItems = driver.findElements(By.cssSelector("#wishlist-sidebar .btn-remove"));
         for (WebElement wishItem:wishItems){
             wishItem.click();
@@ -151,7 +149,7 @@ public class ProductPage extends BasePage {
         return new  ProductPage(driver);
     }
 
-    public  ProductPage productSelection(String productName) throws MalformedURLException, URISyntaxException {
+    public  ProductPage productSelection(String productName) {
         searchField.sendKeys(productName);
         searchField.sendKeys(Keys.ENTER);
         String productXPath = "(//*[@class=\"product-item-info\"])[position()=1]";
@@ -183,7 +181,7 @@ public class ProductPage extends BasePage {
         return new  ProductPage(driver);
     }
 
-    public static boolean selectedProductIsDisplayedInCart(String productName) throws MalformedURLException, URISyntaxException {
+    public static boolean selectedProductIsDisplayedInCart(String productName) {
         cartIcon.click();
         viewAndEditCartLink.click();
         List<WebElement> cartItems = driver.findElements(By.cssSelector(".item-info .product-item-name a"));
@@ -197,7 +195,7 @@ public class ProductPage extends BasePage {
         return nameIsDisplayed;
     }
 
-    public static String getProductName() throws MalformedURLException, URISyntaxException {
+    public static String getProductName(){
         return selectedProductName.getText();
     }
 

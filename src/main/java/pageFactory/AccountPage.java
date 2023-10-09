@@ -6,8 +6,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-import java.net.MalformedURLException;
-import java.net.URISyntaxException;
 import java.util.List;
 
 public class AccountPage extends BasePage {
@@ -63,17 +61,17 @@ public class AccountPage extends BasePage {
     private static WebElement signOutButton;
 
 
-    public AccountPage(WebDriver driver) throws MalformedURLException, URISyntaxException {
+    public AccountPage(WebDriver driver){
         super(driver);
         initElements();
     }
 
-    public AccountPage clickAddressBook() throws MalformedURLException, URISyntaxException {
+    public AccountPage clickAddressBook() {
         addressBookLink.click();
         return new AccountPage(driver);
     }
 
-    public AccountPage clickAddNewAddressButton() throws MalformedURLException, URISyntaxException {
+    public AccountPage clickAddNewAddressButton() {
         addNewAddressButton.click();
         return new AccountPage(driver);
     }
@@ -93,19 +91,19 @@ public class AccountPage extends BasePage {
         zipField.sendKeys(zip);
     }
 
-    public AccountPage selectStateProvince() throws MalformedURLException, URISyntaxException {
+    public AccountPage selectStateProvince(){
         stateProvinceDropdown.click();
         stateProvince.click();
         return new AccountPage(driver);
     }
 
-    public AccountPage selectCountry() throws MalformedURLException, URISyntaxException {
+    public AccountPage selectCountry(){
         countryDropdown.click();
         country.click();
         return new AccountPage(driver);
     }
 
-    public AccountPage clickSaveButton() throws MalformedURLException, URISyntaxException {
+    public AccountPage clickSaveButton(){
         saveButton.click();
         return new AccountPage(driver);
     }
@@ -116,21 +114,21 @@ public class AccountPage extends BasePage {
     public boolean addressIsAdded() {
         return addressContainer.isDisplayed();
     }
-    public  ProductPage clickAddressBookLink() throws MalformedURLException, URISyntaxException {
+    public  ProductPage clickAddressBookLink()  {
         addressBookLink.click();
         return new  ProductPage(driver);
     }
 
-    public int getRowNumber() throws MalformedURLException, URISyntaxException {
+    public int getRowNumber() {
         List<WebElement> tableRows = driver.findElements(By.cssSelector("tbody tr"));
         return tableRows.size();
     }
 
-    public String getAccountName() throws MalformedURLException, URISyntaxException {
+    public String getAccountName() {
         return accountName.getText();
     }
 
-    public HomePage logout() throws MalformedURLException, URISyntaxException {
+    public HomePage logout() {
         customerDropdownMenu.click();
         signOutButton.click();
         return new HomePage(driver);
