@@ -37,13 +37,7 @@ public class TestListener implements TestWatcher, TestExecutionExceptionHandler 
 
     @Attachment("Screenshot")
     public byte[] attachScreenshot(){
-        try {
-            driver = Driver.getDriver();
-        } catch (MalformedURLException e) {
-            throw new RuntimeException(e);
-        } catch (URISyntaxException e) {
-            throw new RuntimeException(e);
-        }
+        driver = Driver.getDriver();
 
         Object output = ((JavascriptExecutor) driver).executeScript("return window.devicePixelRatio");
         String value = String.valueOf(output);

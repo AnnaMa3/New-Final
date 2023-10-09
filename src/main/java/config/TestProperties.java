@@ -1,5 +1,7 @@
 package config;
 
+import exceptions.BadConfigException;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
@@ -14,6 +16,7 @@ public class TestProperties {
             PROPERTIES.load(TEST_PROPS);
         } catch (IOException e) {
             e.printStackTrace();
+            throw new BadConfigException("Error loading config file", e);
         }
     }
 

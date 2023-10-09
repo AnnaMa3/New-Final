@@ -13,12 +13,12 @@ public abstract class BasePage {
     protected static WebDriver driver;
     protected WaiterUtils waiter;
 
-    public BasePage(WebDriver driver) throws MalformedURLException, URISyntaxException {
+    public BasePage(WebDriver driver) {
         this.driver = Driver.getDriver();
         this.waiter = new WaiterUtils(driver);
     }
 
-    public void initElements() throws MalformedURLException, URISyntaxException{
+    public void initElements() {
         PageFactory.initElements(driver, this);
     }
 }
